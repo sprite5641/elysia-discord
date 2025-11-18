@@ -1,0 +1,90 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build
+        run: bun run build
+
+      - name: Extract version from tag
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            CHANGELOG=$(sed -n "/## \[${{ steps.version.outputs.version }}\]/,/## \[/p" CHANGELOG.md | sed '$ d' | tail -n +2)
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG="See [CHANGELOG.md](https://github.com/sprite5641/elysia-discord/blob/master/CHANGELOG.md) for details."
+            fi
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            echo "$CHANGELOG" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "changelog=No changelog available" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## 📦 @sprite.dev5641/elysia-discord v${{ steps.version.outputs.version }}
+            
+            ### 🎉 What's New
+            ${{ steps.changelog.outputs.changelog }}
+            
+            ### 📥 Installation
+            ```bash
+            bun add @sprite.dev5641/elysia-discord@${{ steps.version.outputs.version }}
+            ```
+            
+            ### 🔗 Links
+            - 📦 [npm Package](https://www.npmjs.com/package/@sprite.dev5641/elysia-discord/v/${{ steps.version.outputs.version }})
+            - 📚 [Documentation](https://github.com/sprite5641/elysia-discord#readme)
+            - 📝 [Changelog](https://github.com/sprite5641/elysia-discord/blob/master/CHANGELOG.md)
+            - 🐛 [Report Issues](https://github.com/sprite5641/elysia-discord/issues)
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release Summary
+        run: |
+          echo "## 🎉 Release Created Successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ steps.version.outputs.tag }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** @sprite.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ GitHub Release created" >> $GITHUB_STEP_SUMMARY
+          echo "- ⏳ npm publish will start automatically" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 Check [npm](https://www.npmjs.com/package/@sprite.dev5641/elysia-discord) in a few minutes" >> $GITHUB_STEP_SUMMARY
