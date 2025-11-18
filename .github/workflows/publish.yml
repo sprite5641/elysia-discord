@@ -49,6 +49,6 @@ jobs:
         run: |
           echo "✅ Package published successfully!" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📦 Package: @sprite.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Package: @prachaya.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
           echo "🏷️ Version: $(node -p "require('./package.json').version")" >> $GITHUB_STEP_SUMMARY
-          echo "🔗 NPM: https://www.npmjs.com/package/@sprite.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 NPM: https://www.npmjs.com/package/@prachaya.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY

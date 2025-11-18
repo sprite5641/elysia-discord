@@ -1,14 +1,14 @@
 // Credit: sprite5641
 // src/index.ts
 /**
- * @sprite.dev5641/elysia-discord
+ * @prachaya.dev5641/elysia-discord
  *
  * Discord Interactions API webhook plugin for Elysia with official SDK integration
  *
  * @example
  * ```ts
  * import { Elysia } from 'elysia'
- * import { discord } from '@sprite.dev5641/elysia-discord'
+ * import { discord } from '@prachaya.dev5641/elysia-discord'
  *
  * new Elysia()
  * .use(

@@ -32,7 +32,7 @@ async function verifyDiscordSignature(
  * Echo bot:
  * ```ts
  * import { Elysia } from 'elysia'
- * import { discord } from '@sprite.dev5641/elysia-discord'
+ * import { discord } from '@prachaya.dev5641/elysia-discord'
  *
  * new Elysia()
  * .use(discord({
@@ -79,7 +79,7 @@ export const discord = (options: DiscordOptions) => {
   const logger = new DiscordLogger(verbose);
 
   return new Elysia({
-    name: "@sprite.dev5641/elysia-discord",
+    name: "@prachaya.dev5641/elysia-discord",
     seed: options,
   })
     .state("discord-interaction", null as Interaction | null)

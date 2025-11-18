@@ -1,4 +1,4 @@
-# @sprite.dev5641/elysia-discord
+# @prachaya.dev5641/elysia-discord
 
 Official Discord Interactions API webhook plugin for Elysia — clean, typed, zero-config.
 
@@ -14,14 +14,14 @@ This plugin for ElysiaJS simplifies the process of creating Discord bots by prov
 ## Installation
 
 ```bash
-bun add @sprite.dev5641/elysia-discord
+bun add @prachaya.dev5641/elysia-discord
 ```
 
 ## Usage
 
 ```ts
 import { Elysia } from "elysia";
-import { discord } from "@sprite.dev5641/elysia-discord";
+import { discord } from "@prachaya.dev5641/elysia-discord";
 
 const app = new Elysia()
   .use(
@@ -138,7 +138,7 @@ import {
   SignatureVerificationError,
   ConfigurationError,
   InteractionNotRepliableError
-} from '@sprite.dev5641/elysia-discord'
+} from '@prachaya.dev5641/elysia-discord'
 
 try {
   await discord.reply(interaction, { content: 'Hello!' })

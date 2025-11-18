@@ -1,5 +1,5 @@
 /**
- * Error classes for @sprite.dev5641/elysia-discord
+ * Error classes for @prachaya.dev5641/elysia-discord
  */
 
 /**
