@@ -60,7 +60,7 @@ const app = new Elysia()
                   description: "A Discord bot built with Elysia and @prachaya.dev5641/elysia-discord",
                   color: 0x5865f2,
                   fields: [
-                    { name: "Version", value: "1.1.6", inline: true },
+                    { name: "Version", value: "1.1.7", inline: true },
                     { name: "Framework", value: "Elysia", inline: true },
                   ],
                   timestamp: new Date().toISOString(),
