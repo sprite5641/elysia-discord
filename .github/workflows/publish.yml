@@ -4,10 +4,16 @@ name: Publish Package to npm
 on:
   release:
     types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,6 +29,11 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Verify build output
+        run: |
+          ls -la dist/
+          echo "Build completed successfully"
+
       - name: Setup Node.js for npm
         uses: actions/setup-node@v4
         with:
@@ -33,3 +44,11 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release Summary
+        run: |
+          echo "✅ Package published successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📦 Package: @sprite.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
+          echo "🏷️ Version: $(node -p "require('./package.json').version")" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 NPM: https://www.npmjs.com/package/@sprite.dev5641/elysia-discord" >> $GITHUB_STEP_SUMMARY
