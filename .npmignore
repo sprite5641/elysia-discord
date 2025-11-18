@@ -1,0 +1,44 @@
+# Source files
+src/
+test/
+*.ts
+!dist/**/*.d.ts
+
+# Config files
+tsconfig.json
+.eslintrc
+.prettierrc
+
+# Documentation (keep README.md and LICENSE)
+UPGRADE_PLAN.md
+CLAUDE.md
+GEMINI.md
+CHANGELOG.md
+
+# Development files
+node_modules/
+.vscode/
+.idea/
+.DS_Store
+
+# Test and build artifacts
+*.log
+*.tmp
+coverage/
+.nyc_output/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Environment
+.env
+.env.*
+
+# Lock files (optional - some keep these)
+bun.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
